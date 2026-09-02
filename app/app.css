@@ -1,0 +1,78 @@
+:root {
+  color-scheme: dark;
+  --canvas-background: #211f1f;
+  --blackboard-background-zoom: 3000px;
+  --blackboard-frame-width: clamp(20px, 4.8vmin, 68px);
+  --blackboard-frame-color: rgb(49 27 17 / 78%);
+  --blackboard-inner-edge-width: clamp(2px, 0.35vmin, 5px);
+  --blackboard-inner-edge-color: rgb(0 0 0 / 18%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--canvas-background);
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.pantry-canvas {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  overflow: clip;
+  background-color: var(--canvas-background);
+  background-image: url("../assets/background.svg");
+  background-position: top left;
+  background-repeat: repeat;
+  background-size: var(--blackboard-background-zoom) auto;
+}
+
+.pantry-canvas::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border: var(--blackboard-frame-width) solid var(--blackboard-frame-color);
+  content: "";
+  pointer-events: none;
+}
+
+.pantry-canvas::after {
+  position: absolute;
+  z-index: 1;
+  inset: var(--blackboard-frame-width);
+  border: var(--blackboard-inner-edge-width) solid
+    var(--blackboard-inner-edge-color);
+  content: "";
+  pointer-events: none;
+}
+
+.error-boundary {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 2rem;
+  place-items: center;
+  background: #171717;
+  color: #f2eee8;
+  font: 600 1rem/1.5 system-ui, sans-serif;
+  text-align: center;
+}
