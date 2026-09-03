@@ -11,5 +11,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <main className="pantry-canvas" />;
+  return (
+    <main className="pantry-canvas">
+      <h1 className="pantry-title">De Anza Pantry</h1>
+    </main>
+  );
 }

@@ -1,10 +1,18 @@
+@font-face {
+  font-family: "Animal 2";
+  src: url("../assets/animal2.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
 :root {
   color-scheme: dark;
   --canvas-background: #211f1f;
   --blackboard-background-zoom: 3000px;
-  --blackboard-frame-width: clamp(20px, 4.8vmin, 68px);
+  --blackboard-frame-width: 36px;
   --blackboard-frame-color: rgb(49 27 17 / 78%);
-  --blackboard-inner-edge-width: clamp(2px, 0.35vmin, 5px);
+  --blackboard-faux-shadow-width: 8px;
   --blackboard-inner-edge-color: rgb(0 0 0 / 18%);
 }
 
@@ -52,16 +60,40 @@ body {
   border: var(--blackboard-frame-width) solid var(--blackboard-frame-color);
   content: "";
   pointer-events: none;
+  zoom: reset;
 }
 
 .pantry-canvas::after {
   position: absolute;
   z-index: 1;
   inset: var(--blackboard-frame-width);
-  border: var(--blackboard-inner-edge-width) solid
+  border: var(--blackboard-faux-shadow-width) solid
     var(--blackboard-inner-edge-color);
   content: "";
   pointer-events: none;
+  zoom: reset;
+}
+
+.pantry-title {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding-block-start: calc(
+    var(--blackboard-frame-width) + var(--blackboard-faux-shadow-width) +
+      clamp(18px, 2.5vmin, 32px)
+  );
+  padding-inline: calc(
+    var(--blackboard-frame-width) + var(--blackboard-faux-shadow-width) + 16px
+  );
+  color: rgb(244 241 225 / 92%);
+  font-family: "Animal 2", fantasy;
+  font-size: clamp(1.75rem, 4.5vw, 4rem);
+  font-synthesis: none;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: center;
+  text-wrap: balance;
 }
 
 .error-boundary {
