@@ -9,7 +9,7 @@
 :root {
   color-scheme: dark;
   --canvas-background: #211f1f;
-  --blackboard-background-zoom: 3000px;
+  --blackboard-background-zoom: 1024px;
   --blackboard-frame-width: 36px;
   --blackboard-frame-color: rgb(49 27 17 / 78%);
   --blackboard-faux-shadow-width: 8px;
