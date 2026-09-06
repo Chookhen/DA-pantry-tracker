@@ -6,14 +6,44 @@
   font-weight: 400;
 }
 
+@font-face {
+  font-family: "Fragment Mono";
+  src: url("../assets/FragmentMono-Regular.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
 :root {
   color-scheme: dark;
   --canvas-background: #211f1f;
+  --espresso: #311b11;
   --blackboard-background-zoom: 1024px;
   --blackboard-frame-width: 36px;
   --blackboard-frame-color: rgb(49 27 17 / 78%);
   --blackboard-faux-shadow-width: 8px;
   --blackboard-inner-edge-color: rgb(0 0 0 / 18%);
+  --site-menu-button-size: 48px;
+  --site-menu-button-radius: 24px;
+  --site-menu-edge-gap: clamp(12px, 2vmin, 20px);
+  --site-menu-inset-block-start: max(
+    calc(
+      var(--blackboard-frame-width) + var(--blackboard-faux-shadow-width) +
+        var(--site-menu-edge-gap)
+    ),
+    env(safe-area-inset-top, 0px)
+  );
+  --site-menu-inset-inline-end: max(
+    calc(
+      var(--blackboard-frame-width) + var(--blackboard-faux-shadow-width) +
+        var(--site-menu-edge-gap)
+    ),
+    env(safe-area-inset-right, 0px)
+  );
+  --site-menu-duration: 700ms;
+  --site-menu-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --z-menu-panel: 10;
+  --z-menu-control: 11;
 }
 
 *,
@@ -35,6 +65,132 @@ body {
 body {
   min-height: 100vh;
   min-height: 100dvh;
+}
+
+.site-menu__content {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.site-menu__panel {
+  display: grid;
+  position: fixed;
+  z-index: var(--z-menu-panel);
+  inset: 0;
+  place-items: center;
+  background: var(--espresso);
+  -webkit-clip-path: circle(0px at 100% 0);
+  clip-path: circle(0px at 100% 0);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.site-menu__panel[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.site-menu__panel[data-open="true"] {
+  pointer-events: auto;
+}
+
+.site-menu__toggle {
+  display: grid;
+  position: fixed;
+  z-index: var(--z-menu-control);
+  width: var(--site-menu-button-size);
+  height: var(--site-menu-button-size);
+  padding: 0;
+  top: var(--site-menu-inset-block-start);
+  right: var(--site-menu-inset-inline-end);
+  border: 0;
+  place-items: center;
+  background: transparent;
+  color: rgb(244 241 225 / 96%);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.site-menu__toggle:focus-visible {
+  outline: 2px solid rgb(244 241 225 / 96%);
+  outline-offset: 4px;
+}
+
+.site-menu__toggle:active {
+  scale: 0.96;
+}
+
+.site-menu__icon,
+.site-menu__icon > span {
+  display: block;
+}
+
+.site-menu__icon {
+  position: relative;
+  width: 28px;
+  height: 20px;
+}
+
+.site-menu__icon > span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: center;
+  transition:
+    opacity var(--site-menu-duration) var(--site-menu-ease),
+    transform var(--site-menu-duration) var(--site-menu-ease);
+}
+
+.site-menu__icon > span:nth-child(1) {
+  top: 1px;
+}
+
+.site-menu__icon > span:nth-child(2) {
+  top: 9px;
+}
+
+.site-menu__icon > span:nth-child(3) {
+  top: 17px;
+}
+
+.site-menu__toggle[data-open="true"] .site-menu__icon > span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.site-menu__toggle[data-open="true"] .site-menu__icon > span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.site-menu__toggle[data-open="true"] .site-menu__icon > span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.site-menu__link {
+  display: inline-block;
+  padding: 0.5em;
+  color: rgb(244 241 225 / 96%);
+  font-family: "Fragment Mono", ui-monospace, monospace;
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.site-menu__link:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.site-menu__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 0.25em;
 }
 
 .pantry-canvas {
@@ -107,4 +263,10 @@ body {
   color: #f2eee8;
   font: 600 1rem/1.5 system-ui, sans-serif;
   text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu__icon > span {
+    transition-duration: 1ms;
+  }
 }
